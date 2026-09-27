@@ -2182,9 +2182,7 @@ minigun_weapon_powerup( ent_player, time )
     ent_player switchtoweapon( "minigun_zm" );
     ent_player.zombie_vars["zombie_powerup_minigun_on"] = 1;
     
-    // ==========================================
-    // CREATE THE TEXT TIMER HUD WITH LABEL
-    // ==========================================
+   
     if( !isdefined( ent_player.minigun_timer_hud ) )
     {
         ent_player.minigun_timer_hud = newClientHudElem( ent_player );
@@ -2199,11 +2197,9 @@ minigun_weapon_powerup( ent_player, time )
         ent_player.minigun_timer_hud.color = ( 1, 1, 1 );
         ent_player.minigun_timer_hud.hidewheninmenu = 1;
         
-        // Adds the text prefix before the value
         ent_player.minigun_timer_hud.label = &"Death Machine: "; 
         ent_player.minigun_timer_hud setValue( time );
     }
-    // ==========================================
 
     level thread minigun_weapon_powerup_countdown( ent_player, "minigun_time_over", time );
     level thread minigun_weapon_powerup_replace( ent_player, "minigun_time_over" );
@@ -2220,7 +2216,6 @@ minigun_weapon_powerup_countdown( ent_player, str_gun_return_notify, time )
 
     for ( ent_player.zombie_vars["zombie_powerup_minigun_time"] = time; ent_player.zombie_vars["zombie_powerup_minigun_time"] > 0; ent_player.zombie_vars["zombie_powerup_minigun_time"] -= 0.05 )
     {
-        // UPDATE THE TIMER VISUALLY
         if ( isdefined( ent_player.minigun_timer_hud ) )
             ent_player.minigun_timer_hud setValue( int( ent_player.zombie_vars["zombie_powerup_minigun_time"] ) );
             
@@ -2240,7 +2235,6 @@ minigun_weapon_powerup_replace( ent_player, str_gun_return_notify )
 
     ent_player waittill( "replace_weapon_powerup" );
 
-    // REMOVE HUD IF REPLACED
     if ( isdefined( ent_player.minigun_timer_hud ) )
         ent_player.minigun_timer_hud destroy();
 
@@ -2255,7 +2249,6 @@ minigun_weapon_powerup_remove( ent_player, str_gun_return_notify )
     ent_player endon( "death" );
     ent_player endon( "player_downed" );
     
-    // REMOVE HUD ON TIMER END
     if ( isdefined( ent_player.minigun_timer_hud ) )
         ent_player.minigun_timer_hud destroy();
 
@@ -2307,7 +2300,6 @@ minigun_weapon_powerup_off()
 
 minigun_watch_gunner_downed()
 {
-    // REMOVE HUD IF PLAYER GOES DOWN
     if ( isdefined( self.minigun_timer_hud ) )
         self.minigun_timer_hud destroy();
 
